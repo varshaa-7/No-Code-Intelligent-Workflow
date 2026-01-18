@@ -21,3 +21,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+# python
+venv/
+backend/venv/
+__pycache__/
+*.pyc
