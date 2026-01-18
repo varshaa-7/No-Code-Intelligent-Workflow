@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genai-stack-frontend
+  labels:
+    app: genai-stack
+    component: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: genai-stack
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: genai-stack
+        component: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: genai-stack-frontend:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: genai-stack-frontend
+spec:
+  selector:
+    app: genai-stack
+    component: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
