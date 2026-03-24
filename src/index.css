@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-flow__node,
+.react-flow__node-output,
+.react-flow__node.output {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.react-flow__node.selected,
+.react-flow__node-output.selected,
+.react-flow__node.output.selected {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
