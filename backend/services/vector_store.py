@@ -5,10 +5,21 @@ from chromadb.config import Settings
 
 class VectorStore:
     def __init__(self):
-        self.client = chromadb.Client(Settings(
-            anonymized_telemetry=False,
-            allow_reset=True
-        ))
+        # Use in-memory storage for production (Render has ephemeral filesystem)
+        import os
+        is_production = os.getenv("RENDER") or os.getenv("PRODUCTION") or not os.path.exists("/tmp")
+
+        if is_production:
+            self.client = chromadb.Client(Settings(
+                anonymized_telemetry=False,
+                allow_reset=True,
+                persist_directory=None,  # In-memory only
+            ))
+        else:
+            self.client = chromadb.Client(Settings(
+                anonymized_telemetry=False,
+                allow_reset=True
+            ))
         self.collections: Dict[str, Any] = {}
 
     def _get_collection(self, document_id: str):

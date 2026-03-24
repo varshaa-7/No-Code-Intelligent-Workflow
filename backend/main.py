@@ -18,9 +18,13 @@ app = FastAPI(title="GenAI Stack API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://no-code-intelligent-workflow-yv2t.vercel.app"],
+    allow_origins=[
+        "https://no-code-intelligent-workflow-yv2t.vercel.app",
+        "http://localhost:5173",  # For local development
+        "http://localhost:3000",  # Alternative local port
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -28,14 +32,19 @@ document_processor = DocumentProcessor()
 embedding_service = EmbeddingService()
 vector_store = VectorStore()
 llm_service = LLMService()
-workflow_executor = WorkflowExecutor(
-    document_processor=document_processor,
-    embedding_service=embedding_service,
-    vector_store=vector_store,
-    llm_service=llm_service,
-)
 
-supabase = get_supabase_client()
+try:
+    workflow_executor = WorkflowExecutor(
+        document_processor=document_processor,
+        embedding_service=embedding_service,
+        vector_store=vector_store,
+        llm_service=llm_service,
+    )
+    supabase = get_supabase_client()
+except Exception as e:
+    print(f"Warning: Could not initialize services: {e}")
+    workflow_executor = None
+    supabase = None
 
 
 class DocumentUploadResponse(BaseModel):
@@ -77,6 +86,9 @@ async def upload_document(
     file: UploadFile = File(...),
     stack_id: str = File(...),
 ):
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database not properly initialized. Check environment variables.")
+
     try:
         content = await file.read()
 
@@ -109,6 +121,9 @@ async def upload_document(
 
 @app.post("/embeddings/generate")
 async def generate_embeddings(request: EmbeddingRequest):
+    if not supabase or not embedding_service:
+        raise HTTPException(status_code=500, detail="Services not properly initialized. Check environment variables.")
+
     try:
         result = supabase.table("documents").select("*").eq("id", request.document_id).execute()
 
@@ -149,6 +164,9 @@ async def generate_embeddings(request: EmbeddingRequest):
 
 @app.post("/workflow/execute", response_model=WorkflowExecuteResponse)
 async def execute_workflow(request: WorkflowExecuteRequest):
+    if not workflow_executor or not supabase:
+        raise HTTPException(status_code=500, detail="Backend services not properly initialized. Check environment variables.")
+
     try:
         result = supabase.table("stacks").select("*").eq("id", request.stack_id).execute()
 
@@ -189,6 +207,9 @@ async def execute_workflow(request: WorkflowExecuteRequest):
 
 @app.get("/documents/{stack_id}")
 async def get_documents(stack_id: str):
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database not properly initialized. Check environment variables.")
+
     try:
         result = supabase.table("documents").select("id, filename, created_at").eq("stack_id", stack_id).execute()
         return {"documents": result.data}
@@ -198,6 +219,9 @@ async def get_documents(stack_id: str):
 
 @app.delete("/documents/{document_id}")
 async def delete_document(document_id: str):
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database not properly initialized. Check environment variables.")
+
     try:
         supabase.table("embeddings").delete().eq("document_id", document_id).execute()
 
