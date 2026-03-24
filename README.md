@@ -182,7 +182,6 @@ kubectl get service genai-stack-frontend
 - Select embedding model
 
 #### LLM Engine
-- Choose Groq model (Mixtral, Llama, Gemma)
 - Set API key
 - Adjust temperature and max tokens
 - Add custom system prompt

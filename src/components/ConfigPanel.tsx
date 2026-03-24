@@ -99,7 +99,6 @@ export function ConfigPanel({ node, stackId, onClose, onUpdate }: ConfigPanelPro
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="groq">Groq</option>
-          <option value="openai">OpenAI</option>
         </select>
       </div>
 
@@ -169,20 +168,6 @@ export function ConfigPanel({ node, stackId, onClose, onUpdate }: ConfigPanelPro
 
   const renderLLMEngineConfig = () => (
     <div className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Model</label>
-        <select
-          value={(config as LLMEngineConfig).model || 'gpt-4o-mini'}
-          onChange={(e) => handleConfigChange('model', e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="gpt-4o">GPT-4o</option>
-          <option value="gpt-4o-mini">GPT-4o Mini</option>
-          <option value="gpt-4-turbo">GPT-4 Turbo</option>
-          <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-        </select>
-      </div>
-
       <div className="p-3 bg-blue-50 border border-blue-200 rounded-md">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           API Key <span className="text-red-500">*</span> (Required)
@@ -191,18 +176,18 @@ export function ConfigPanel({ node, stackId, onClose, onUpdate }: ConfigPanelPro
           type="password"
           value={(config as LLMEngineConfig).apiKey || ''}
           onChange={(e) => handleConfigChange('apiKey', e.target.value)}
-          placeholder="Enter your OpenAI API key"
+          placeholder="Enter your Groq API key"
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <p className="text-xs text-gray-600 mt-2 mb-2">
           Get your API key from{' '}
           <a
-            href="https://platform.openai.com/api-keys"
+            href="https://console.groq.com/keys"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline font-semibold"
           >
-            platform.openai.com/api-keys
+            console.groq.com
           </a>
         </p>
         <p className="text-xs text-gray-500">

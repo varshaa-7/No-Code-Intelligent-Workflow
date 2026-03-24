@@ -175,7 +175,10 @@ class WorkflowExecutor:
         if not api_key:
             raise ValueError("LLM API key not configured")
 
-        model = config.get("model", "gpt-4o-mini")
+        if not api_key.startswith("gsk_"):
+            raise ValueError("Invalid LLM API key. For Groq, API keys must start with gsk_.")
+
+        model = "llama-3.1-8b-instant"
         temperature = config.get("temperature", 0.7)
         max_tokens = config.get("maxTokens", 1024)
         system_prompt = config.get("systemPrompt")

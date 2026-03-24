@@ -110,8 +110,7 @@ Frontend will start at `http://localhost:5173`
 5. Connect them: User Query → LLM Engine → Output
 6. Click on LLM Engine component
 7. Enter your Groq API key
-8. Choose a model (Mixtral 8x7B recommended)
-9. Click "Save Configuration"
+8. Click "Save Configuration"
 
 ## Step 6: Test Your Workflow
 
@@ -164,7 +163,6 @@ pip install -r requirements.txt
 
 - Verify Groq API key is correct
 - Check you have credits/quota remaining
-- Try a different model
 
 ## Docker Quick Start (Alternative)
 
@@ -185,7 +183,6 @@ docker-compose up --build
 
 - Read [README.md](README.md) for detailed documentation
 - Check [ARCHITECTURE.md](ARCHITECTURE.md) for system design
-- Explore different LLM models and settings
 - Try web search integration
 - Build more complex workflows
 

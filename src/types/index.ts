@@ -60,13 +60,12 @@ export interface UserQueryConfig {
 
 export interface KnowledgeBaseConfig {
   documentIds?: string[];
-  embeddingModel?: 'groq' | 'openai';
+  embeddingModel?: 'groq';
   chunkSize?: number;
   chunkOverlap?: number;
 }
 
 export interface LLMEngineConfig {
-  model?: string;
   apiKey?: string;
   temperature?: number;
   maxTokens?: number;

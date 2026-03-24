@@ -51,7 +51,6 @@ App
 │   │   ├── Document Upload
 │   │   └── Embedding Settings
 │   ├── LLM Engine Config
-│   │   ├── Model Selection
 │   │   ├── API Key Input
 │   │   ├── Temperature Control
 │   │   └── Web Search Toggle
@@ -340,14 +339,14 @@ FastAPI Application
 - **FastAPI**: Modern Python framework with automatic API documentation
 - **Supabase**: Managed PostgreSQL with real-time capabilities
 - **ChromaDB**: In-memory vector database for fast similarity search
-- **Groq API**: Fast LLM inference with multiple models
+- **Groq API**: Fast LLM inference with Llama 3.1 8B Instant model
 - **Sentence Transformers**: Local embedding generation
 
 ### Advantages
 
 1. **Supabase over traditional PostgreSQL**: Built-in auth, RLS, real-time subscriptions
 2. **ChromaDB over Pinecone/Weaviate**: Simple setup, no external service required
-3. **Groq over OpenAI**: Faster inference, cost-effective, multiple models
+3. **Groq over OpenAI**: Faster inference, cost-effective, optimized for Llama models
 4. **React Flow over custom canvas**: Production-ready, feature-rich, maintained
 
 ## Scalability Considerations

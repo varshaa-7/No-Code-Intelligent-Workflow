@@ -41,7 +41,7 @@ export const DEFAULT_NODE_CONFIGS = {
     chunkOverlap: 50,
   },
   llmEngine: {
-    model: 'gpt-4o-mini',
+    model: 'llama-3.1-8b-instant',
     temperature: 0.7,
     maxTokens: 1024,
     systemPrompt: 'You are a helpful AI assistant.',
